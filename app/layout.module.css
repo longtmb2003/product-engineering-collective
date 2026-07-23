@@ -1,0 +1,33 @@
+/*
+ * Skip link. The first focusable element on the page, hidden until focused.
+ *
+ * Not visually hidden with the shared .srOnly rule, because it must become
+ * visible on focus and reveal its own position.
+ */
+
+.skip {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip:focus-visible {
+  position: fixed;
+  inset-block-start: var(--space-16);
+  inset-inline-start: var(--space-16);
+  z-index: 3;
+  inline-size: auto;
+  block-size: auto;
+  overflow: visible;
+  clip-path: none;
+  padding-block: var(--space-12);
+  padding-inline: var(--space-16);
+  background-color: var(--accent);
+  color: var(--text-on-accent);
+  font-size: var(--text-metadata);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-base);
+}

@@ -1,0 +1,88 @@
+/*
+ * Sections are separated by distance and a tick. No background change, no
+ * rule, no divider (Implementation Specification §4.6).
+ */
+
+.section {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-auto-rows: max-content;
+  padding-block: var(--gap-section);
+}
+
+/* ADR-001: the focus ring is not suppressed here. Programmatic focus is
+   still focus. */
+
+.header {
+  grid-column: content-start / content-end;
+  position: relative;
+}
+
+.marginalia {
+  grid-column: cross-start / datum;
+  justify-self: end;
+  padding-inline-end: var(--space-16);
+  font-size: var(--text-marginalia);
+  line-height: var(--lh-marginalia);
+  letter-spacing: var(--ls-marginalia);
+  color: var(--text-muted);
+  /* Suppressed below 768: at this size the wrap rate makes it noise. It does
+     not relocate or shrink. Its content is redundant by specification. */
+  display: none;
+}
+
+.title {
+  max-inline-size: var(--width-title);
+  font-size: var(--text-title);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+/* The section lead. Secondary, not muted — it is the first thing read after
+   the heading and carries the section's argument. */
+.intro {
+  max-inline-size: var(--width-prose);
+  margin-block-start: var(--gap-group);
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+  color: var(--text-secondary);
+}
+
+/* Tick. 8px, extending toward inline-start, aligned to the vertical centre
+   of the heading's first line box (Implementation Specification §2.4). */
+.title::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--tick-reach));
+  inset-block-start: calc(var(--text-title) * var(--lh-title) / 2);
+  inline-size: var(--tick-length);
+  block-size: 1px;
+  background-color: var(--border-subtle);
+  transform: translateY(-0.5px);
+}
+
+.body {
+  grid-column: content-start / content-end;
+  margin-block-start: var(--gap-header);
+}
+
+@media (min-width: 768px) {
+  .marginalia {
+    display: block;
+    grid-row: 1;
+  }
+
+  .header {
+    grid-row: 1;
+  }
+}
+
+@media (forced-colors: active) {
+  .title::before {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}

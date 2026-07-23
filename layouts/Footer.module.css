@@ -1,0 +1,100 @@
+/*
+ * Outside .page, so the datum does not extend into it. The line's terminal
+ * tick sits at this element's top edge.
+ *
+ * Lowest density on the page. No back-to-top control, no newsletter capture,
+ * no social row — each would reopen a page that has just closed itself.
+ */
+
+.footer {
+  display: grid;
+  grid-template-columns: var(--page-grid);
+  inline-size: 100%;
+  max-inline-size: var(--width-content);
+  margin-inline: auto;
+  padding-block: var(--gap-header);
+}
+
+.inner {
+  grid-column: content-start / content-end;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-header);
+}
+
+.identity {
+  max-inline-size: var(--width-prose);
+}
+
+.mark {
+  font-size: var(--text-metadata);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.tagline {
+  margin-block-start: var(--gap-element);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-muted);
+}
+
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-header) var(--space-64);
+}
+
+.columnTitle {
+  font-size: var(--text-marginalia);
+  line-height: var(--lh-marginalia);
+  letter-spacing: var(--ls-marginalia);
+  font-weight: var(--weight-regular);
+  color: var(--text-muted);
+}
+
+.columnList {
+  margin-block-start: var(--gap-element);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-tight);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--space-48);
+  font-size: var(--text-metadata);
+  color: var(--text-muted);
+  transition: color var(--duration-state) var(--ease-state);
+}
+
+.link:hover {
+  color: var(--text-primary);
+}
+
+.link:active {
+  transition-duration: var(--duration-instant);
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--gap-tight) var(--gap-group);
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-muted);
+}
+
+@media (min-width: 768px) {
+  .inner {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .legal {
+    flex-basis: 100%;
+  }
+}

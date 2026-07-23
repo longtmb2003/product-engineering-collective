@@ -1,0 +1,223 @@
+.hero {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: start;
+}
+
+/*
+ * The label moves into the measurement gutter, on the headline's first line.
+ *
+ * Stacked above the headline it was a caption; registered against the datum
+ * it becomes an annotation — the same relationship a plate number has to a
+ * plate. It is also the page's first asymmetry: the gutter is occupied on
+ * the left while the headline sits short of the right edge.
+ */
+.eyebrow {
+  grid-column: cross-start / datum;
+  grid-row: 1;
+  justify-self: end;
+  padding-inline-end: var(--space-16);
+  padding-block-start: var(--gap-section);
+  font-size: var(--text-marginalia);
+  line-height: var(--lh-marginalia);
+  letter-spacing: var(--ls-marginalia);
+  color: var(--text-muted);
+  display: none;
+}
+
+.inner {
+  grid-column: content-start / content-end;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-block-size: calc(100svh - var(--space-64));
+  padding-block: var(--gap-section);
+  position: relative;
+}
+
+/* Shown in the content column only where the gutter does not exist. */
+.eyebrowInline {
+  font-size: var(--text-marginalia);
+  line-height: var(--lh-marginalia);
+  letter-spacing: var(--ls-marginalia);
+  color: var(--text-muted);
+  margin-block-end: var(--gap-group);
+}
+
+.headline {
+  max-inline-size: var(--width-display);
+  font-size: var(--text-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  /* Text gradient (Premium Minimal) */
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--text-muted) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.headline::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--tick-reach));
+  inset-block-start: calc(var(--text-display) * var(--lh-display) / 2);
+  inline-size: var(--tick-length);
+  block-size: 1px;
+  background-color: var(--border-subtle);
+  transform: translateY(-0.5px);
+}
+
+.subhead {
+  margin-block-start: var(--gap-block);
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+  color: var(--text-secondary);
+}
+
+.actions {
+  margin-block-start: var(--gap-header);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-group);
+}
+
+.evidence {
+  margin-block-start: var(--space-96);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-group);
+}
+
+.evidenceItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-tight);
+  min-block-size: var(--space-48);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--duration-state) var(--ease-state);
+  inline-size: fit-content;
+}
+
+.evidenceItem:hover {
+  color: var(--accent-hover);
+}
+
+.evidenceItem:active {
+  transition-duration: var(--duration-instant);
+}
+
+.evidenceName {
+  font-weight: var(--weight-medium);
+}
+
+.evidenceMeta {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/*
+ * Entrance choreography.
+ *
+ * Four typographic units, 90ms apart, then the description and its actions
+ * afterwards. Transform and opacity only, so nothing reflows and CLS is
+ * untouched.
+ *
+ * NOTE: the brief asks for the headline to reveal line by line. Rendered
+ * line boxes are a wrapping outcome, not addressable in CSS, so true
+ * per-line staggering needs explicit line breaks authored in content —
+ * which is frozen. The stagger runs across the hero's four units instead,
+ * at the specified intervals.
+ */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-24));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.eyebrow,
+.eyebrowInline,
+.headline,
+.subhead,
+.actions,
+.evidence {
+  animation: heroRise var(--duration-rise) var(--ease-editorial) both;
+}
+
+.headline {
+  animation-delay: 90ms;
+}
+
+.subhead {
+  animation-delay: 180ms;
+}
+
+.actions {
+  animation-delay: 270ms;
+}
+
+.evidence {
+  animation-delay: 360ms;
+}
+
+@media (min-width: 768px) {
+  .eyebrow {
+    display: block;
+  }
+
+  /* Visually hidden rather than removed: the gutter copy is aria-hidden, so
+     this one stays in the accessibility tree at every breakpoint and the
+     label is announced exactly once. */
+  .eyebrowInline {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .evidence {
+    flex-direction: row;
+    gap: var(--space-48);
+  }
+
+  .evidenceItem {
+    min-block-size: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .eyebrowInline,
+  .headline,
+  .subhead,
+  .actions,
+  .evidence {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .headline::before {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}

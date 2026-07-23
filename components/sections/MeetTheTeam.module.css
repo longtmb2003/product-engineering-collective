@@ -1,0 +1,252 @@
+/*
+ * Person first, discipline second. No cards.
+ *
+ * All four entries carry identical visual weight. Two members have public
+ * profiles and an owned product; two do not. The trailing row renders only
+ * when present, so absence leaves no gap and no implied ranking — the two
+ * without links have more professional experience than the two with them.
+ */
+
+.list {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-auto-rows: max-content;
+  row-gap: var(--gap-section);
+  margin-block-start: var(--gap-header);
+}
+
+/*
+ * The entry occupies the content column and splits internally with flex.
+ * A nested grid template is not used: Implementation Specification §2.7
+ * permits exactly one column track list, and a second would create a rival
+ * source of truth for line positions.
+ */
+.entry {
+  grid-column: content-start / content-end;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-block);
+}
+
+/*
+ * Artifact D-02: 1:1, minimum 256px. The ratio is fixed here rather than by
+ * the asset, so the box is reserved before the image loads and substituting
+ * an asset cannot shift layout. CLS is zero by construction.
+ */
+.portrait {
+  inline-size: 256px;
+  max-inline-size: 100%;
+  aspect-ratio: 1 / 1;
+  flex: none;
+  position: relative;
+  overflow: clip;
+  background-color: var(--surface-1);
+}
+
+/*
+ * DEVIATION — see docs/tech-debt.md TD-002.
+ *
+ * Artifact D-03 states crops are baked into the asset and the layout never
+ * re-crops; Implementation Specification §9 constraint 19 forbids cropping
+ * portraits in CSS. Three of the four supplied portraits are not 1:1 and
+ * none is a head-and-shoulders crop, so `cover` is the only rendering that
+ * does not distort or letterbox them.
+ *
+ * `object-position: center` is deliberate: per-image positioning would be
+ * art direction in CSS and would compound the violation. Remove this rule
+ * entirely once conforming assets exist.
+ */
+/*
+ * One grade across all four.
+ *
+ * The portraits were taken in four places, four lightings and four moods —
+ * a restaurant, a beach, a lawn, a wall of bougainvillea. Nothing in the
+ * layout can reconcile that; only a shared treatment can. Desaturating
+ * toward the paper's own warmth pulls them into one series, the way a
+ * catalogue prints every plate on the same stock with the same ink.
+ *
+ * Deliberately partial, not monochrome: skin keeps some life, and the
+ * images still read as photographs of people rather than as a graphic
+ * device. This is the strongest available answer short of a reshoot.
+ */
+.portrait img {
+  object-fit: cover;
+  object-position: var(--focal, 50% 50%);
+  /* Pulled right back. The 0.82 grade was tuned for a cream page and read as
+     a sepia effect against warm white — an Instagram filter, which is the
+     one thing this is not. At 0.34 with a trace of warmth the four
+     photographs simply agree with each other: the beach, the lawn and the
+     restaurant stop competing, and the images stay photographs. */
+  filter: grayscale(0.34) sepia(0.05) saturate(0.96) contrast(1.02);
+  transition:
+    transform var(--duration-portrait) var(--ease-editorial),
+    filter var(--duration-portrait) var(--ease-editorial);
+}
+
+/*
+ * The photograph comes forward slightly and regains its colour. Filter is
+ * the one non-transform property animated on this page; it is composited,
+ * touches no layout, and is the only way to express "the picture wakes up".
+ */
+.entry:hover .portrait img,
+.entry:focus-within .portrait img {
+  transform: scale(1.015);
+  filter: grayscale(0) sepia(0.03) saturate(1) contrast(1.01);
+}
+
+.detail {
+  transition: transform var(--duration-portrait) var(--ease-editorial);
+}
+
+.entry:hover .detail,
+.entry:focus-within .detail {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait img,
+  .detail {
+    transition: none;
+  }
+
+  .entry:hover .portrait img,
+  .entry:focus-within .portrait img,
+  .entry:hover .detail,
+  .entry:focus-within .detail {
+    transform: none;
+  }
+}
+
+.detail {
+  position: relative;
+}
+
+/* Names set at title scale rather than heading scale. In a design annual the
+   contributor's name is the largest thing on the spread; four names at card
+   scale was the main reason the section read as a grid of tiles. */
+.name {
+  font-size: var(--text-title);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.name::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--tick-reach));
+  inset-block-start: calc(var(--text-heading) * var(--lh-heading) / 2);
+  inline-size: var(--tick-length);
+  block-size: 1px;
+  background-color: var(--border-subtle);
+  transform: translateY(-0.5px);
+}
+
+.discipline {
+  margin-block-start: var(--gap-tight);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-muted);
+}
+
+/* Reading text: secondary, not muted. See WhatWeDo .description. */
+.bio {
+  margin-block-start: var(--gap-element);
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--text-secondary);
+}
+
+.links {
+  margin-block-start: var(--gap-group);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-32);
+}
+
+.product,
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--space-48);
+  font-size: var(--text-metadata);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--duration-state) var(--ease-state);
+}
+
+.product {
+  font-weight: var(--weight-medium);
+  color: var(--accent);
+}
+
+.product:hover {
+  color: var(--accent-hover);
+}
+
+.link {
+  color: var(--text-muted);
+}
+
+.link:hover {
+  color: var(--text-primary);
+}
+
+.product:active,
+.link:active {
+  transition-duration: var(--duration-instant);
+}
+
+@media (min-width: 768px) {
+  /* Mass right, text bounded left — the second and final time the right
+     side fills. */
+  .entry {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--gap-header);
+  }
+
+  .detail {
+    flex: 1 1 auto;
+    max-inline-size: var(--width-prose);
+  }
+
+  .portrait {
+    order: 1;
+    inline-size: 320px;
+  }
+
+  /*
+   * Alternating rhythm. Every second portrait moves to the leading edge, so
+   * the eye crosses the column instead of running down one rail. The entries
+   * stay identical in weight — only the side changes — which breaks the
+   * repetition without ranking anyone.
+   */
+  .entry:nth-child(even) .portrait {
+    order: 0;
+  }
+
+  .entry:nth-child(even) .detail {
+    order: 1;
+  }
+}
+
+@media (min-width: 1280px) {
+  .portrait {
+    inline-size: 384px;
+  }
+}
+
+@media (forced-colors: active) {
+  .name::before {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}

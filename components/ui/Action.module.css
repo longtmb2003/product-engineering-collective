@@ -1,0 +1,53 @@
+/*
+ * Ruled actions. A filled rectangle is card grammar and the page has none;
+ * a hairline rule ties the action to the datum's own language.
+ *
+ * The filled variant is permitted exactly once on the page, in Contact
+ * (Artifact Specification C-02 variant B). It is not implemented here
+ * because Contact is not yet specified.
+ */
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--space-48);
+  padding: 0 var(--space-24);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--space-8);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    color var(--duration-state) var(--ease-state),
+    border-color var(--duration-state) var(--ease-state),
+    background var(--duration-state) var(--ease-state),
+    box-shadow var(--duration-state) var(--ease-state);
+}
+
+.action:active {
+  transition-duration: var(--duration-instant);
+}
+
+.primary {
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.primary:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-strong);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.05);
+}
+
+.secondary {
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+}
+
+.secondary:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--text-muted);
+}

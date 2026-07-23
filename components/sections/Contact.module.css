@@ -1,0 +1,116 @@
+/*
+ * No cards, no icons, no buttons. The contact details are a short block of
+ * text in the content column, set with the same tokens every other section
+ * uses. The only treatment is the link underline already established in
+ * Featured Work and Meet the Team.
+ */
+
+.details {
+  grid-column: content-start / content-end;
+  margin-block-start: var(--gap-header);
+  max-inline-size: var(--width-prose);
+}
+
+.name {
+  font-size: var(--text-heading);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.role {
+  margin-block-start: var(--gap-tight);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-muted);
+}
+
+.channels {
+  margin-block-start: var(--gap-group);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-32);
+}
+
+.email,
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-block-size: var(--space-48);
+  font-size: var(--text-metadata);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--duration-state) var(--ease-state);
+}
+
+.email {
+  font-weight: var(--weight-medium);
+  color: var(--accent);
+}
+
+.email:hover {
+  color: var(--accent-hover);
+}
+
+.link {
+  color: var(--text-muted);
+}
+
+.link:hover {
+  color: var(--text-primary);
+}
+
+.email:active,
+.link:active {
+  transition-duration: var(--duration-instant);
+}
+
+.response {
+  margin-block-start: var(--gap-element);
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-muted);
+}
+
+/*
+ * The last words on the page, set at lead scale so the section closes on a
+ * sentence rather than trailing off into metadata. An editorial book ends
+ * with a line, not with a form.
+ */
+.closing {
+  margin-block-start: var(--gap-header);
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+/* Colophon. Sits in the measurement gutter, aligned with the details block,
+   the way an edition line sits in a book's margin. */
+.colophon {
+  grid-column: cross-start / datum;
+  justify-self: end;
+  padding-inline-end: var(--space-16);
+  margin-block-start: var(--gap-header);
+  font-size: var(--text-marginalia);
+  line-height: var(--lh-marginalia);
+  letter-spacing: var(--ls-marginalia);
+  color: var(--text-faint);
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .colophon {
+    display: block;
+    grid-row: 2;
+  }
+
+  .details {
+    grid-row: 2;
+  }
+}

@@ -1,0 +1,276 @@
+/*
+ * Design tokens
+ *
+ * The single source of every colour, spacing value, font size, radius and
+ * duration in the codebase. Architecture Specification §7: literal values
+ * inside components are prohibited.
+ *
+ * Layer 1 — primitives (raw scale). Never referenced by components.
+ * Layer 2 — semantic roles. The only layer components may use.
+ */
+
+:root {
+  /* ======================================================================
+   * COLOUR
+   * ==================================================================== */
+
+  /* ---- Layer 1: primitives -------------------------------------------
+   *
+   * Specified in OKLCH. Perceptually uniform, so a lightness step looks like
+   * the same step everywhere on the ramp. Hex is a derived artifact, never
+   * the source of truth.
+   *
+   * One warm family: paper and ink at hue 75-80, accent at 48. Warmth comes
+   * from hue held at very low chroma, not from a cream cast — which is the
+   * difference between premium stock and aged paper.
+   */
+
+  /*
+   * Stock. Warmer cream to match the Retro Pop / Neobrutalism aesthetic.
+   */
+  --paper-968: oklch(0.95 0.02 85);
+  --paper-918: oklch(0.90 0.02 85);
+  --paper-880: oklch(0.85 0.02 85);
+  --paper-770: oklch(0.77 0.02 85);
+  --paper-615: oklch(0.615 0.02 85);
+
+  /*
+   * Ink. High contrast dark charcoal for strong retro typography.
+   */
+  --ink-265: oklch(0.18 0.01 70);
+  --ink-395: oklch(0.3 0.01 70);
+  --ink-520: oklch(0.45 0.01 70);
+  --ink-660: oklch(0.6 0.01 72);
+  --ink-975: oklch(0.975 0.003 72);
+
+  /*
+   * Accent: Vintage Green for the Retro Pop feel.
+   */
+  --accent-480: oklch(0.6 0.12 160);
+  --accent-415: oklch(0.5 0.12 160);
+
+  /* Status. Hue rotation at the accent's lightness and restraint. */
+  --signal-success: oklch(0.47 0.09 148);
+  --signal-destructive: oklch(0.465 0.145 28);
+
+  /* ---- Layer 2: semantic roles --------------------------------------- */
+  --surface-base: var(--paper-968);
+  /* Recessed fields only — form controls, and the letterbox behind a
+     screenshot. There is no elevated surface for content: cards are
+     prohibited. */
+  --surface-1: var(--paper-918);
+  --surface-2: var(--paper-880);
+
+  /* Reading text. Anything a visitor is expected to read a sentence of uses
+     primary or secondary — never muted. Hierarchy comes from scale, not from
+     greying prose down. */
+  --text-primary: var(--ink-265);
+  --text-secondary: var(--ink-395);
+  /* Subordinate information only: metadata, labels, supporting lines.
+     5.02:1 on the page.
+
+     USAGE RULE: not permitted on --surface-1, where it computes to 4.32:1.
+     Text on surface-1 must use secondary or primary. The ramp is not
+     compressed to accommodate a pairing the page does not contain. */
+  --text-muted: var(--ink-520);
+  /* Restricted: 2.84:1 fails AA for normal text. Permitted only at >=24px or
+     for genuinely non-essential decoration. Never for marginalia, captions
+     or metadata. Currently: two middot separators. */
+  --text-faint: var(--ink-660);
+  --text-on-accent: var(--ink-975);
+
+  --accent: var(--accent-480);
+  --accent-hover: var(--accent-415);
+
+  /* Neobrutalism / Retro Pop: Borders are dark ink lines. */
+  --border-subtle: var(--ink-265);
+  --border-strong: var(--ink-265);
+
+  --success: var(--signal-success);
+  /* The system does not invent a second warm hue for warning. */
+  --warning: var(--accent-480);
+  --destructive: var(--signal-destructive);
+
+  --radius-base: 2px;
+
+  /* ======================================================================
+   * SPACING
+   *
+   * Doubling series from 4, plus the arithmetic midpoint of each octave.
+   * No value outside this set may appear anywhere.
+   * --space-6 is permitted on the inline axis only.
+   * ==================================================================== */
+
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+  --space-128: 128px;
+  --space-192: 192px;
+  --space-256: 256px;
+
+  /* ---- Interval tokens. Six. No seventh may be declared. -------------- */
+  --gap-section: var(--space-96);
+  --gap-header: var(--space-48);
+  --gap-block: var(--space-32);
+  --gap-group: var(--space-24);
+  --gap-element: var(--space-16);
+  --gap-tight: var(--space-8);
+
+  /* ======================================================================
+   * LAYOUT
+   *
+   * The page grid, declared once. Every section and entry inherits it via
+   * subgrid and never re-declares a template.
+   *
+   * Sub-mobile (<480) is the base case; larger tiers override below.
+   * ==================================================================== */
+
+  --width-content: 1280px;
+  --width-display: 768px;
+  --width-title: 640px;
+  --width-prose: 544px;
+
+  --tick-length: var(--space-6);
+  --tick-reach: calc(var(--space-24) + var(--tick-length));
+
+  --page-grid:
+    [full-start gutter-start cross-start] var(--space-16)
+    [datum] var(--space-24)
+    [content-start] minmax(0, 1fr)
+    [content-end] var(--space-16)
+    [full-end];
+
+  /* ======================================================================
+   * TYPOGRAPHY
+   *
+   * Modular scale anchored at body = 16px. Upward ratio 1.25, downward 1.15.
+   * Fluid roles interpolate between 480 and 1280 viewport. No breakpoint-
+   * specific font-size may be declared anywhere in the codebase.
+   * ==================================================================== */
+
+  /* Archivo. Design System §2.1 selects ABC Diatype and names Archivo as the
+     only approved substitution where licensing blocks it; no licence has been
+     procured. Weights 400 and 500 only — the system has no bold.
+
+     Archivo Mono does not exist (see docs/spec-issues.md SPEC-ISSUE-002), so
+     the monospace role is held on a system stack pending an amendment. */
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --text-display: clamp(2.5rem, -0.5rem + 10vw, 7.5rem);
+  --lh-display: 1.02;
+  --ls-display: -0.042em;
+
+  --text-title: clamp(1.9375rem, 1.2625rem + 2.25vw, 3.0625rem);
+  --lh-title: 1.1;
+  --ls-title: -0.025em;
+
+  --text-heading: clamp(1.25rem, 1.0625rem + 0.625vw, 1.5625rem);
+  --lh-heading: 1.25;
+  --ls-heading: -0.015em;
+
+  --text-lead: clamp(1.0625rem, 0.9875rem + 0.25vw, 1.1875rem);
+  --lh-lead: 1.65;
+
+  /* Body leading opened from 1.5 to 1.75 — 24px to 28px, still on the 4px
+     baseline. At a 544px measure, 24px was screen-tight; 28px is book
+     leading, and it is the single change that most makes a paragraph read
+     as set rather than as rendered. Size is unchanged. */
+  --text-body: 1rem;
+  --lh-body: 1.75;
+
+  --text-metadata: 0.875rem;
+  --lh-metadata: 1.4285714;
+
+  --text-caption: 0.75rem;
+  --lh-caption: 1.3333333;
+
+  --text-marginalia: 0.6875rem;
+  --lh-marginalia: 1.4545455;
+  --ls-marginalia: 0.01em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+
+  /* ======================================================================
+   * MOTION
+   *
+   * Three durations, two easings. The datum draw is the only animation.
+   * ==================================================================== */
+
+  --duration-instant: 0ms;
+  --duration-state: 120ms;
+  --duration-datum: 900ms;
+  /* Hero entrance. Shorter than the datum draw so nothing competes with it. */
+  --duration-rise: 620ms;
+
+  --ease-state: linear;
+  --ease-datum: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Editorial reveal curve — decelerating, measured, never springy. */
+  --ease-editorial: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-reveal: 650ms;
+  --duration-quote: 700ms;
+  --duration-hover: 500ms;
+  --duration-portrait: 450ms;
+  --duration-underline: 300ms;
+  --delay-datum: 150ms;
+}
+
+@media (min-width: 480px) {
+  :root {
+    --tick-length: var(--space-8);
+    --page-grid:
+      [full-start gutter-start cross-start] var(--space-24)
+      [datum] var(--space-24)
+      [content-start] minmax(0, 1fr)
+      [content-end] var(--space-24)
+      [full-end];
+  }
+}
+
+/*
+ * Line naming follows Implementation Specification §2.1 verbatim.
+ *
+ * The published template and its resolved-positions table disagree, and the
+ * template also conflicts with Artifact Specification D-01 on the crossing
+ * plate's left edge. See docs/spec-issues.md SPEC-ISSUE-001. The template as
+ * published is implemented here unchanged; no local interpretation is applied
+ * and none may be until an amendment is approved.
+ */
+@media (min-width: 768px) {
+  :root {
+    --gap-section: var(--space-128);
+    --tick-reach: calc(var(--space-32) + var(--tick-length));
+    --page-grid:
+      [full-start] var(--space-48)
+      [cross-start] var(--space-32)
+      [gutter-start] var(--space-64)
+      [datum] var(--space-32)
+      [content-start] minmax(0, 1fr)
+      [content-end] var(--space-48)
+      [full-end];
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --gap-section: var(--space-192);
+    --gap-header: var(--space-64);
+    --gap-block: var(--space-48);
+    --page-grid:
+      [full-start] var(--space-64)
+      [cross-start] var(--space-32)
+      [gutter-start] var(--space-96)
+      [datum] var(--space-32)
+      [content-start] minmax(0, 1fr)
+      [content-end] var(--space-64)
+      [full-end];
+  }
+}

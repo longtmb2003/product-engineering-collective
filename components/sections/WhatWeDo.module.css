@@ -1,0 +1,122 @@
+/*
+ * A vertical sequence, never a grid. The content is a directed path; a 2x2
+ * arrangement would say "four equivalent parallel things" and argue against
+ * every word in the section.
+ *
+ * No cards. Structure is alignment, distance and tick registration.
+ */
+
+.list {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-auto-rows: max-content;
+  row-gap: var(--gap-header);
+  margin-block-start: var(--gap-header);
+}
+
+/* No rule between entries. A divider separates two things and belongs to
+   neither; the tick marks the entry and belongs to it (Artifact G-04). */
+.entry {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+/* The index is measurement, not decoration: it labels a real order. */
+.index {
+  grid-column: cross-start / datum;
+  justify-self: end;
+  padding-inline-end: var(--space-16);
+  font-size: var(--text-marginalia);
+  line-height: var(--lh-marginalia);
+  letter-spacing: var(--ls-marginalia);
+  color: var(--text-muted);
+  display: none;
+}
+
+.content {
+  grid-column: content-start / content-end;
+  position: relative;
+}
+
+.title {
+  font-size: var(--text-heading);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.title::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--tick-reach));
+  inset-block-start: calc(var(--text-heading) * var(--lh-heading) / 2);
+  inline-size: var(--tick-length);
+  block-size: 1px;
+  background-color: var(--border-subtle);
+  transform: translateY(-0.5px);
+}
+
+.member {
+  margin-block-start: var(--gap-tight);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-secondary);
+}
+
+/* Reading text: secondary, not muted. Prose a visitor is expected to read a
+   sentence of should be dark. Hierarchy against the heading comes from scale
+   and weight, not from fading the words. */
+.description {
+  margin-block-start: var(--gap-element);
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--text-secondary);
+}
+
+/* Concrete nouns, middot-separated. Not a technology list, not chips. */
+.focus {
+  margin-block-start: var(--gap-group);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-12);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-secondary);
+}
+
+.focusItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.focusItem::after {
+  content: "·";
+  color: var(--text-faint);
+}
+
+.focusItem:last-child::after {
+  content: none;
+}
+
+@media (min-width: 768px) {
+  .index {
+    display: block;
+    grid-row: 1;
+  }
+
+  .content {
+    grid-row: 1;
+  }
+}
+
+@media (forced-colors: active) {
+  .title::before {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}

@@ -1,0 +1,200 @@
+@import "./tokens.css";
+
+/*
+ * Global stylesheet. Reset and base element styles only.
+ *
+ * Everything else lives in a component module. Architecture Specification
+ * §16: every component owns exactly one stylesheet. Nothing that belongs to
+ * a component may be added here.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Sticky header (64) plus clearance (32). */
+  scroll-padding-top: calc(var(--space-64) + var(--space-32));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  font-weight: var(--weight-regular);
+  /* Every number on the page aligns in its column, whether or not it sits
+     in one. Never overridden. */
+  font-variant-numeric: tabular-nums lining-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  position: relative;
+}
+
+/* 1. Global Subtle Noise Texture */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025; /* Very subtle, Premium minimal */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 1. Global Radial Glow at the top */
+body::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-start: 0;
+  block-size: 80vh;
+  background: radial-gradient(ellipse at 50% -20%, rgba(255,255,255, 0.05), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-size: inherit;
+  font-weight: inherit;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+img,
+svg {
+  display: block;
+  max-inline-size: 100%;
+}
+
+/*
+ * One focus treatment for the whole site.
+ *
+ * ADR-001: this is never suppressed, including on programmatically focused
+ * sections. `outline: none` without a compliant replacement is prohibited
+ * anywhere in the codebase, including this reset.
+ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-base);
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--text-on-accent);
+}
+
+/*
+ * Section reveals.
+ *
+ * Cross-cutting like the reset and the focus ring, so it lives here rather
+ * than in a module. Sections carry [data-reveal]; the observer in
+ * features/Reveal.tsx adds [data-revealed].
+ *
+ * Gated behind `scripting: enabled` so the hidden start state can never
+ * strand content. Where the query is unsupported the block is skipped
+ * entirely and everything renders visible — the correct failure in both
+ * directions.
+ *
+ * Transform and opacity only. The section animates as a unit; paragraphs
+ * inside it are never staggered.
+ */
+@media (scripting: enabled) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(var(--space-24));
+    transition:
+      opacity var(--duration-reveal) var(--ease-editorial),
+      transform var(--duration-reveal) var(--ease-editorial);
+  }
+
+  [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Display typography gains a letter-spacing settle. Never body copy. */
+  [data-reveal-quote] {
+    opacity: 0;
+    transform: translateY(var(--space-16));
+    letter-spacing: 0.02em;
+    transition:
+      opacity var(--duration-quote) var(--ease-editorial),
+      transform var(--duration-quote) var(--ease-editorial),
+      letter-spacing var(--duration-quote) var(--ease-editorial);
+  }
+
+  [data-reveal-quote][data-revealed] {
+    opacity: 1;
+    transform: none;
+    letter-spacing: var(--ls-title);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-quote] {
+    opacity: 1;
+    transform: none;
+    letter-spacing: var(--ls-title);
+    transition: none;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

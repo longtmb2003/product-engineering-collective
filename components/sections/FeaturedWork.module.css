@@ -1,0 +1,306 @@
+/*
+ * The densest region of the page and the only one permitted a crossing.
+ * No cards: the plate and its caption sit directly on the page surface.
+ */
+
+.note {
+  grid-column: content-start / content-end;
+  margin-block-start: var(--gap-group);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-muted);
+}
+
+.list {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-auto-rows: max-content;
+  row-gap: var(--gap-section);
+  margin-block-start: var(--gap-header);
+}
+
+.entry {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--gap-block);
+}
+
+/*
+ * Plate number, in the measurement gutter beside the caption.
+ *
+ * Catalogue convention: the object is numbered, and the number lives outside
+ * the image with the other measurements. It reuses the gutter the datum
+ * already established rather than introducing a new position.
+ */
+.plateNumber {
+  grid-column: cross-start / datum;
+  opacity: 0.45;
+  transition: opacity var(--duration-hover) var(--ease-editorial);
+  justify-self: end;
+  padding-inline-end: var(--space-16);
+  font-size: var(--text-marginalia);
+  line-height: var(--lh-marginalia);
+  letter-spacing: var(--ls-marginalia);
+  color: var(--text-muted);
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .plateNumber {
+    display: block;
+  }
+}
+
+/*
+ * Artifact D-01: 4:3. Fixed here rather than by the asset, so the box is
+ * reserved before load and an asset swap cannot shift layout.
+ *
+ * Standard plate: content-start to content-end.
+ */
+.plate {
+  grid-column: content-start / content-end;
+  aspect-ratio: 4 / 3;
+  position: relative;
+  overflow: clip;
+  background-color: var(--surface-1);
+  transition: box-shadow var(--duration-hover) var(--ease-editorial);
+}
+
+/*
+ * The crossing. Exactly one on the page. It extends left across the datum
+ * and occludes the line for its full height — the page's single
+ * compositional event. Below 768 the crossing is abandoned: at a 24px datum
+ * offset it cannot read as deliberate.
+ */
+.plateCrossing {
+  grid-column: content-start / content-end;
+  aspect-ratio: 4 / 3;
+  position: relative;
+  overflow: clip;
+  background-color: var(--surface-1);
+  transition: box-shadow var(--duration-hover) var(--ease-editorial);
+}
+
+/*
+ * Screenshots are mounted, not cropped.
+ *
+ * `contain` keeps every interface complete — a screenshot is evidence, and
+ * cropping it removes part of the thing being evidenced. The two assets have
+ * very different shapes (a 2.05 desktop lobby, a 0.46 phone screen), and the
+ * mount is what makes them read as one series rather than two accidents.
+ *
+ * The inset is the mount itself: the screenshot sits on a slightly deeper
+ * sheet with a margin on every side, the way a plate is tipped into a
+ * catalogue. Without it the image butts the panel edge and reads as a
+ * cropped screenshot rather than a reproduction.
+ */
+.plate img,
+.plateCrossing img {
+  object-fit: contain;
+  object-position: center;
+  padding: var(--space-24);
+  /* The two screenshots are lit differently from each other and from the
+     page — one pale mint, one near-black. A trace of warmth pulls both
+     toward the sheet without altering what they show; the interfaces stay
+     legible and unretouched. */
+  filter: sepia(0.03) saturate(0.97);
+  transition: transform var(--duration-hover) var(--ease-editorial);
+}
+
+@media (min-width: 768px) {
+  .plate img,
+  .plateCrossing img {
+    padding: var(--space-48);
+  }
+}
+
+.caption {
+  grid-column: content-start / content-end;
+  position: relative;
+  transition: transform var(--duration-hover) var(--ease-editorial);
+}
+
+/*
+ * Handled, not clickable.
+ *
+ * The plate lifts very slightly, the caption follows it, and the number
+ * comes up to full strength. No shadow, no glow, no border — the gesture is
+ * of a print being picked up and looked at, not of a button offering itself.
+ */
+.entry:hover .plate img,
+.entry:hover .plateCrossing img,
+.entry:focus-within .plate img,
+.entry:focus-within .plateCrossing img {
+  transform: scale(1.03);
+}
+
+.entry:hover .plate,
+.entry:hover .plateCrossing,
+.entry:focus-within .plate,
+.entry:focus-within .plateCrossing {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 24px 48px -12px rgba(0, 0, 0, 0.3);
+}
+
+.entry:hover .caption,
+.entry:focus-within .caption {
+  transform: translateY(-2px);
+}
+
+.entry:hover .plateNumber,
+.entry:focus-within .plateNumber {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caption,
+  .plateNumber,
+  .plate img,
+  .plateCrossing img {
+    transition: none;
+  }
+
+  .entry:hover .plate img,
+  .entry:hover .plateCrossing img,
+  .entry:focus-within .plate img,
+  .entry:focus-within .plateCrossing img {
+    transform: none;
+  }
+
+  .entry:hover .caption,
+  .entry:focus-within .caption {
+    transform: none;
+  }
+
+  .entry:hover .plate,
+  .entry:hover .plateCrossing,
+  .entry:focus-within .plate,
+  .entry:focus-within .plateCrossing {
+    box-shadow: none;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-12);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-muted);
+}
+
+.name {
+  margin-block-start: var(--gap-element);
+  font-size: var(--text-heading);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.name::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--tick-reach));
+  inset-block-start: 0;
+  inline-size: var(--tick-length);
+  block-size: 1px;
+  background-color: var(--border-subtle);
+  transform: translateY(calc(var(--text-metadata) * var(--lh-metadata) / 2));
+}
+
+.summary {
+  margin-block-start: var(--gap-element);
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+  color: var(--text-secondary);
+}
+
+/* The engineering choices, stated and left alone. One step quieter than the
+   summary, so they read as supporting detail. */
+.engineering {
+  margin-block-start: var(--gap-element);
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-muted);
+}
+
+/* Machine identifiers. One of three permitted monospace uses. */
+.stack {
+  margin-block-start: var(--gap-group);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-muted);
+}
+
+.stackItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.stackItem::after {
+  content: "·";
+  color: var(--text-faint);
+}
+
+.stackItem:last-child::after {
+  content: none;
+}
+
+.footerRow {
+  margin-block-start: var(--gap-block);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-32);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-block-size: var(--space-48);
+  font-size: var(--text-metadata);
+  font-weight: var(--weight-medium);
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--duration-state) var(--ease-state);
+}
+
+.link:hover {
+  color: var(--accent-hover);
+}
+
+.link:active {
+  transition-duration: var(--duration-instant);
+}
+
+.depth {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+
+@media (min-width: 768px) {
+  .plateCrossing {
+    grid-column: cross-start / content-end;
+  }
+}
+
+@media (forced-colors: active) {
+  .name::before {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}

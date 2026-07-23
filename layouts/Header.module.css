@@ -1,0 +1,136 @@
+/*
+ * Chrome, not measured content. The logotype sits at the page gutter and the
+ * links end at the container's right content edge — neither aligns to the
+ * datum, because chrome is not measured from it.
+ */
+
+.inner {
+  grid-column: cross-start / content-end;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-group);
+  block-size: var(--space-64);
+}
+
+.mark {
+  font-family: var(--font-sans);
+  font-size: var(--text-metadata);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  transition: color var(--duration-state) var(--ease-state);
+}
+
+.mark:hover {
+  color: var(--accent);
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-32);
+}
+
+/*
+ * An underline that grows from the centre and retreats the same way. No
+ * colour change: the rule does the work, which is quieter and reads as
+ * typographic rather than as a UI state.
+ */
+.link {
+  position: relative;
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-muted);
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -4px;
+  block-size: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--duration-underline) var(--ease-editorial);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link::after {
+    transition: none;
+  }
+}
+
+.link:active {
+  transition-duration: var(--duration-instant);
+}
+
+.desktopNav {
+  display: none;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--space-48);
+  block-size: var(--space-48);
+  margin-inline-end: calc(-1 * var(--space-12));
+  color: var(--text-secondary);
+  transition: color var(--duration-state) var(--ease-state);
+}
+
+.trigger:hover {
+  color: var(--text-primary);
+}
+
+.icon {
+  inline-size: var(--space-24);
+  block-size: var(--space-24);
+}
+
+.panel {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.panelHidden {
+  display: none;
+}
+
+.panelList {
+  grid-column: content-start / content-end;
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--gap-tight) var(--gap-group);
+}
+
+.panelLink {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--space-48);
+  font-size: var(--text-metadata);
+  color: var(--text-secondary);
+  transition: color var(--duration-state) var(--ease-state);
+}
+
+.panelLink:hover {
+  color: var(--text-primary);
+}
+
+@media (min-width: 768px) {
+  .desktopNav {
+    display: block;
+  }
+
+  .trigger,
+  .panel {
+    display: none;
+  }
+}

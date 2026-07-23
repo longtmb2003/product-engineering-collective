@@ -1,0 +1,83 @@
+/*
+ * Not a section: no heading, no anchor, no navigation entry, and no tick.
+ * The datum passes through it marking nothing — the only unmarked passage on
+ * the page, and the omission is load-bearing.
+ *
+ * No background, no border. Separated by distance alone.
+ */
+
+.philosophy {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+  /* Clips the edition numeral where it runs past the page edge. */
+  overflow: clip;
+}
+
+/*
+ * The page's one editorial interruption.
+ *
+ * An oversized edition numeral set in the measurement gutter and cropped by
+ * the page edge — a page number at the scale a catalogue prints one. It
+ * happens exactly once, in the quietest passage on the page, which is what
+ * keeps it an interruption rather than a motif.
+ *
+ * Faint enough to be found rather than announced: most visitors will notice
+ * it on a second scroll, which is the point.
+ */
+.edition {
+  grid-column: full-start / datum;
+  grid-row: 1;
+  justify-self: start;
+  align-self: center;
+  margin-inline-start: calc(-1 * var(--space-24));
+  font-size: calc(var(--text-display) * 1.6);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  font-weight: var(--weight-medium);
+  color: var(--border-subtle);
+  pointer-events: none;
+  user-select: none;
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .edition {
+    display: block;
+  }
+}
+
+.inner {
+  grid-column: content-start / content-end;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-group);
+  max-inline-size: var(--width-title);
+  padding-block: var(--gap-section);
+}
+
+.line {
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+  color: var(--text-muted);
+}
+
+/*
+ * The closing line becomes a pull quote.
+ *
+ * This is the page's one deliberate break in rhythm. Every other section
+ * runs heading -> lead -> content at the same scale; here the argument
+ * arrives at title size with no heading above it, in the middle of the
+ * page's quietest passage. It is the only interruption, which is what keeps
+ * it an interruption rather than a pattern.
+ */
+.closing {
+  margin-block-start: var(--gap-block);
+  font-size: var(--text-title);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  text-wrap: balance;
+}
