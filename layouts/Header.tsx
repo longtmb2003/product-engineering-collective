@@ -26,7 +26,7 @@ export function Header({
     <header className={className}>
       <div className={styles.inner}>
         <a href="#top" className={styles.mark}>
-          {site.shortName}
+          <img src="/icon.png?v=2" alt={site.shortName} className={styles.logo} />
         </a>
 
         <nav aria-label="Primary" className={styles.desktopNav}>

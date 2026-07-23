@@ -6,9 +6,23 @@
  * codebase may declare grid-template-columns with a track list.
  */
 
+/*
+ * Rows are declared explicitly, and this matters.
+ *
+ * The datum spans `grid-row: 1 / -1`, and `-1` resolves against the EXPLICIT
+ * grid. With no `grid-template-rows`, the explicit grid has one row line, so
+ * `1 / -1` collapsed to a single implicit row: the datum rendered only as
+ * tall as the header, and — because an explicitly placed item blocks
+ * auto-placement — the full-width header could not fit row 1 and was pushed
+ * down, leaving an empty band at the top of the page.
+ *
+ * Two explicit rows plus explicit placement for all three children removes
+ * the ambiguity entirely.
+ */
 .page {
   display: grid;
   grid-template-columns: var(--page-grid);
+  grid-template-rows: auto 1fr;
   inline-size: 100%;
   max-inline-size: var(--width-content);
   margin-inline: auto;
@@ -21,6 +35,14 @@
   grid-column: full-start / full-end;
   display: grid;
   grid-template-columns: subgrid;
+}
+
+.header {
+  grid-row: 1;
+}
+
+.main {
+  grid-row: 2;
 }
 
 /* Above the datum, so the crossing plate occludes the line by paint order

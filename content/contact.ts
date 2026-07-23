@@ -17,7 +17,7 @@ export const contact: ContactContent = {
     "She looks after new projects, partnerships and client communication. From the first message she brings in whoever the work actually needs, so you are talking to the people who will build it early rather than late.",
 
   person: {
-    name: "Tran Huynh Anh Thu",
+    name: "Anh Thu",
     role: "Product & Partnerships",
 
     email: "tranhuynhathu@gmail.com",

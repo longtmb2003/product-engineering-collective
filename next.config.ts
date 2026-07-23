@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /* The floating Next badge is dev-only, but clients shouldn't see it in a
+     screen share either. */
+  devIndicators: false,
+
   images: {
     /* Implementation Specification §8.4: AVIF with WebP fallback. Next serves
        the first format the client accepts, so order matters. */

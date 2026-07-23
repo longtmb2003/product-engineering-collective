@@ -78,7 +78,7 @@
      one thing this is not. At 0.34 with a trace of warmth the four
      photographs simply agree with each other: the beach, the lawn and the
      restaurant stop competing, and the images stay photographs. */
-  filter: grayscale(0.34) sepia(0.05) saturate(0.96) contrast(1.02);
+  filter: grayscale(0.18) sepia(0.02) saturate(1) contrast(1.01);
   transition:
     transform var(--duration-portrait) var(--ease-editorial),
     filter var(--duration-portrait) var(--ease-editorial);

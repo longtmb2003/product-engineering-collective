@@ -73,12 +73,24 @@ export type Capability = {
   /* Two-digit index shown as a monospace marker. */
   index: string;
   title: string;
-  /* Every capability maps to exactly one person. This mapping is the point
-     of the section — it shows there are no layers rather than claiming it. */
-  member: string;
   description: string;
-  /* Concrete nouns describing the work. Not a technology list. */
+  /* What a client actually receives. Deliverables, not adjectives. */
   focus: string[];
+  /* Technologies, with a brand mark where one exists. Logos are nominative
+     use — they say which tools the team works with, nothing more. */
+  stack: { name: string; logo?: string }[];
+};
+
+/*
+ * Secondary services. Real work the team takes on, but not part of the four
+ * main service groups — listed separately and at a quieter weight so the
+ * core offering stays legible.
+ */
+export type SupportService = {
+  name: string;
+  description: string;
+  /* Index into the support-service icon set. */
+  icon: string;
 };
 
 export type WhatWeDoContent = {
@@ -86,6 +98,10 @@ export type WhatWeDoContent = {
   title: string;
   intro: string;
   capabilities: Capability[];
+  additional: {
+    title: string;
+    services: SupportService[];
+  };
 };
 
 export type Product = {

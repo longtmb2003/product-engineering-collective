@@ -11,8 +11,7 @@ import type { HeroContent } from "@/content/types";
  * cannot verify.
  */
 export const hero: HeroContent = {
-  /* PLACEHOLDER until the collective is named — see content/site.ts */
-  eyebrow: "Product Engineering Collective",
+  eyebrow: "Vertex Lab",
 
   headline: "An independent collective that builds digital products end to end.",
 

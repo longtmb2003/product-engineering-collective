@@ -27,9 +27,17 @@
 }
 
 .mark {
-  font-size: var(--text-metadata);
-  font-weight: var(--weight-medium);
-  color: var(--text-primary);
+  display: inline-block;
+  transition: opacity var(--duration-state) var(--ease-state);
+}
+
+.mark:hover {
+  opacity: 0.8;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
 }
 
 .tagline {

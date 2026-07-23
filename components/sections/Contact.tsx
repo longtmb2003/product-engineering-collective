@@ -54,10 +54,6 @@ export function Contact({ content }: { content: ContactContent }) {
         <p className={styles.closing}>{content.closing}</p>
       </div>
 
-      {/* Colophon in the gutter — the publication signing off. */}
-      <p className={styles.colophon} aria-hidden="true">
-        {content.colophon}
-      </p>
     </Section>
   );
 }

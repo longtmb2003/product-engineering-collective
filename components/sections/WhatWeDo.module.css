@@ -1,7 +1,7 @@
 /*
- * A vertical sequence, never a grid. The content is a directed path; a 2x2
- * arrangement would say "four equivalent parallel things" and argue against
- * every word in the section.
+ * A vertical sequence, never a grid. Four service groups delivered by one
+ * team, read top to bottom; a 2x2 arrangement would scatter them into four
+ * unrelated tiles.
  *
  * No cards. Structure is alignment, distance and tick registration.
  */
@@ -40,6 +40,12 @@
   position: relative;
 }
 
+.heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+
 .title {
   font-size: var(--text-heading);
   line-height: var(--lh-heading);
@@ -48,41 +54,42 @@
   color: var(--text-primary);
 }
 
-.title::before {
+.heading::before {
   content: "";
   position: absolute;
   inset-inline-start: calc(-1 * var(--tick-reach));
-  inset-block-start: calc(var(--text-heading) * var(--lh-heading) / 2);
+  inset-block-start: calc(var(--space-32) / 2);
   inline-size: var(--tick-length);
   block-size: 1px;
   background-color: var(--border-subtle);
   transform: translateY(-0.5px);
 }
 
-.member {
-  margin-block-start: var(--gap-tight);
-  font-size: var(--text-metadata);
-  line-height: var(--lh-metadata);
-  color: var(--text-secondary);
-}
-
 /* Reading text: secondary, not muted. Prose a visitor is expected to read a
    sentence of should be dark. Hierarchy against the heading comes from scale
    and weight, not from fading the words. */
 .description {
-  margin-block-start: var(--gap-element);
+  margin-block-start: var(--gap-group);
   max-inline-size: var(--width-prose);
   font-size: var(--text-body);
   line-height: var(--lh-body);
   color: var(--text-secondary);
 }
 
-/* Concrete nouns, middot-separated. Not a technology list, not chips. */
+/*
+ * Deliverables, one per line, in columns.
+ *
+ * These were a single middot-separated run — eight items flowing as one
+ * paragraph, which is exactly the wall of text that tires the eye. Broken
+ * into rows, each item gets its own resting point and the whole group can be
+ * scanned instead of read.
+ *
+ * The leading dash is the tick language again, not a bullet glyph.
+ */
 .focus {
   margin-block-start: var(--gap-group);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4) var(--space-12);
+  display: grid;
+  gap: var(--space-8) var(--space-32);
   font-size: var(--text-metadata);
   line-height: var(--lh-metadata);
   color: var(--text-secondary);
@@ -90,17 +97,121 @@
 
 .focusItem {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-12);
 }
 
-.focusItem::after {
-  content: "·";
-  color: var(--text-faint);
+.focusItem::before {
+  content: "";
+  flex: none;
+  inline-size: var(--space-8);
+  block-size: 1px;
+  background-color: var(--border-strong);
+  transform: translateY(-0.35em);
 }
 
-.focusItem:last-child::after {
-  content: none;
+@media (min-width: 640px) {
+  .focus {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/*
+ * The stack, set one step quieter than the deliverables. A buyer evaluating
+ * an engineering team reads it; everyone else can skip it. Monospace because
+ * these are machine identifiers — one of the three permitted uses.
+ */
+.stack {
+  margin-block-start: var(--gap-group);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+  color: var(--text-muted);
+}
+
+.stackItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding-block: var(--space-4);
+  padding-inline: var(--space-8) var(--space-12);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--space-4);
+}
+
+/*
+ * Brand marks kept at their own colours. A monochrome treatment would read
+ * as decoration; left alone they are recognised in peripheral vision, which
+ * is the entire reason a buyer scans a stack list.
+ */
+.stackLogo {
+  inline-size: var(--space-16);
+  block-size: var(--space-16);
+  object-fit: contain;
+  flex: none;
+}
+
+/*
+ * Secondary services.
+ *
+ * Set below the four service groups and deliberately lighter: no index, no
+ * stack, no tick. The visual gap is the point — these are things you can
+ * also buy, not the core of what the team does.
+ */
+.additional {
+  grid-column: content-start / content-end;
+  margin-block-start: var(--gap-section);
+  padding-block-start: var(--gap-header);
+  border-block-start: 1px solid var(--border-subtle);
+}
+
+.additionalTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--weight-regular);
+  color: var(--text-muted);
+}
+
+.services {
+  margin-block-start: var(--gap-header);
+  display: grid;
+  gap: var(--gap-header);
+}
+
+.service {
+  display: grid;
+  grid-template-columns: var(--space-32) minmax(0, 1fr);
+  column-gap: var(--space-16);
+  row-gap: var(--space-8);
+  align-items: start;
+}
+
+.service > svg {
+  grid-row: 1 / span 2;
+}
+
+.serviceName {
+  font-size: var(--text-metadata);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.serviceDescription {
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-muted);
+}
+
+@media (min-width: 768px) {
+  .services {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--gap-header);
+  }
 }
 
 @media (min-width: 768px) {
@@ -115,7 +226,7 @@
 }
 
 @media (forced-colors: active) {
-  .title::before {
+  .heading::before {
     background-color: CanvasText;
     forced-color-adjust: none;
   }

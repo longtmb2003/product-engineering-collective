@@ -30,8 +30,7 @@
   grid-row: 1;
   justify-self: start;
   align-self: center;
-  margin-inline-start: calc(-1 * var(--space-24));
-  font-size: calc(var(--text-display) * 1.6);
+  font-size: calc(var(--text-display) * 1.05);
   line-height: 0.8;
   letter-spacing: -0.06em;
   font-weight: var(--weight-medium);

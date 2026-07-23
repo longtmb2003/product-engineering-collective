@@ -106,7 +106,7 @@
      page — one pale mint, one near-black. A trace of warmth pulls both
      toward the sheet without altering what they show; the interfaces stay
      legible and unretouched. */
-  filter: sepia(0.03) saturate(0.97);
+  filter: sepia(0.012) saturate(0.99);
   transition: transform var(--duration-hover) var(--ease-editorial);
 }
 

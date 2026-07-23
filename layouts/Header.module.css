@@ -25,6 +25,11 @@
   color: var(--accent);
 }
 
+.logo {
+  width: 28px;
+  height: 28px;
+}
+
 .list {
   display: flex;
   align-items: center;

@@ -62,10 +62,10 @@ export const team: TeamContent = {
     },
     {
       id: "tran-huynh-anh-thu",
-      name: "Tran Huynh Anh Thu",
+      name: "Anh Thu",
       discipline: "Product growth",
       bio: "Handles positioning, content and the commercial side of a launch. Has taken a B2B technology product to market and runs the customer-facing operations around it. Usually the one asking who the product is for, and what happens the day after it ships.",
-      portrait: { src: "/team/THAT.jpg", alt: "Tran Huynh Anh Thu", focal: "50% 94%" },
+      portrait: { src: "/team/THAT.jpg", alt: "Anh Thu", focal: "50% 94%" },
     },
   ],
 };

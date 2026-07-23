@@ -16,7 +16,9 @@ export function Footer({
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.identity}>
-          <p className={styles.mark}>{site.shortName}</p>
+          <a href="#top" className={styles.mark}>
+            <img src="/icon.png?v=2" alt={site.shortName} className={styles.logo} />
+          </a>
           <p className={styles.tagline}>{content.tagline}</p>
         </div>
 

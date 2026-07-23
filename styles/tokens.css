@@ -28,26 +28,26 @@
   /*
    * Stock. Warmer cream to match the Retro Pop / Neobrutalism aesthetic.
    */
-  --paper-968: oklch(0.95 0.02 85);
-  --paper-918: oklch(0.90 0.02 85);
-  --paper-880: oklch(0.85 0.02 85);
-  --paper-770: oklch(0.77 0.02 85);
-  --paper-615: oklch(0.615 0.02 85);
+  --paper-968: oklch(0.978 0.003 75);
+  --paper-918: oklch(0.935 0.004 75);
+  --paper-880: oklch(0.9 0.004 75);
+  --paper-770: oklch(0.79 0.005 75);
+  --paper-615: oklch(0.64 0.005 75);
 
   /*
    * Ink. High contrast dark charcoal for strong retro typography.
    */
-  --ink-265: oklch(0.18 0.01 70);
-  --ink-395: oklch(0.3 0.01 70);
-  --ink-520: oklch(0.45 0.01 70);
-  --ink-660: oklch(0.6 0.01 72);
-  --ink-975: oklch(0.975 0.003 72);
+  --ink-265: oklch(0.255 0.004 70);
+  --ink-395: oklch(0.39 0.004 70);
+  --ink-520: oklch(0.515 0.004 70);
+  --ink-660: oklch(0.665 0.004 72);
+  --ink-975: oklch(0.98 0.002 75);
 
   /*
    * Accent: Vintage Green for the Retro Pop feel.
    */
-  --accent-480: oklch(0.6 0.12 160);
-  --accent-415: oklch(0.5 0.12 160);
+  --accent-480: oklch(0.475 0.085 47);
+  --accent-415: oklch(0.405 0.08 45);
 
   /* Status. Hue rotation at the accent's lightness and restraint. */
   --signal-success: oklch(0.47 0.09 148);
@@ -116,9 +116,9 @@
   --space-256: 256px;
 
   /* ---- Interval tokens. Six. No seventh may be declared. -------------- */
-  --gap-section: var(--space-96);
-  --gap-header: var(--space-48);
-  --gap-block: var(--space-32);
+  --gap-section: var(--space-64);
+  --gap-header: var(--space-32);
+  --gap-block: var(--space-24);
   --gap-group: var(--space-24);
   --gap-element: var(--space-16);
   --gap-tight: var(--space-8);
@@ -135,7 +135,7 @@
   --width-content: 1280px;
   --width-display: 768px;
   --width-title: 640px;
-  --width-prose: 544px;
+  --width-prose: 608px;
 
   --tick-length: var(--space-6);
   --tick-reach: calc(var(--space-24) + var(--tick-length));
@@ -168,32 +168,32 @@
   --lh-display: 1.02;
   --ls-display: -0.042em;
 
-  --text-title: clamp(1.9375rem, 1.2625rem + 2.25vw, 3.0625rem);
+  --text-title: clamp(2.0625rem, 1.35rem + 2.4vw, 3.25rem);
   --lh-title: 1.1;
   --ls-title: -0.025em;
 
-  --text-heading: clamp(1.25rem, 1.0625rem + 0.625vw, 1.5625rem);
+  --text-heading: clamp(1.5rem, 1.25rem + 0.8vw, 1.875rem);
   --lh-heading: 1.25;
   --ls-heading: -0.015em;
 
-  --text-lead: clamp(1.0625rem, 0.9875rem + 0.25vw, 1.1875rem);
+  --text-lead: clamp(1.25rem, 1.16rem + 0.3vw, 1.4375rem);
   --lh-lead: 1.65;
 
   /* Body leading opened from 1.5 to 1.75 — 24px to 28px, still on the 4px
      baseline. At a 544px measure, 24px was screen-tight; 28px is book
      leading, and it is the single change that most makes a paragraph read
      as set rather than as rendered. Size is unchanged. */
-  --text-body: 1rem;
-  --lh-body: 1.75;
+  --text-body: 1.125rem;
+  --lh-body: 1.5555556;
 
-  --text-metadata: 0.875rem;
-  --lh-metadata: 1.4285714;
+  --text-metadata: 1.0625rem;
+  --lh-metadata: 1.4117647;
 
-  --text-caption: 0.75rem;
+  --text-caption: 0.9375rem;
   --lh-caption: 1.3333333;
 
-  --text-marginalia: 0.6875rem;
-  --lh-marginalia: 1.4545455;
+  --text-marginalia: 0.9375rem;
+  --lh-marginalia: 1.3333333;
   --ls-marginalia: 0.01em;
 
   --weight-regular: 400;
@@ -246,7 +246,7 @@
  */
 @media (min-width: 768px) {
   :root {
-    --gap-section: var(--space-128);
+    --gap-section: var(--space-96);
     --tick-reach: calc(var(--space-32) + var(--tick-length));
     --page-grid:
       [full-start] var(--space-48)
@@ -261,9 +261,9 @@
 
 @media (min-width: 1280px) {
   :root {
-    --gap-section: var(--space-192);
-    --gap-header: var(--space-64);
-    --gap-block: var(--space-48);
+    --gap-section: var(--space-128);
+    --gap-header: var(--space-48);
+    --gap-block: var(--space-32);
     --page-grid:
       [full-start] var(--space-64)
       [cross-start] var(--space-32)

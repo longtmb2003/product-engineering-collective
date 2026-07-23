@@ -8,10 +8,10 @@ export const footer: FooterContent = {
     {
       title: "Explore",
       links: [
-        { label: "What we do", href: "#what-we-do" },
+        { label: "Services", href: "#what-we-do" },
         { label: "Work", href: "#work" },
         { label: "Team", href: "#team" },
-        { label: "Process", href: "#process" },
+        { label: "Contact", href: "#contact" },
       ],
     },
     {
@@ -25,6 +25,5 @@ export const footer: FooterContent = {
       ],
     },
   ],
-
-  note: "Version 0.1 — stakeholder preview.",
+  note: "",
 };
