@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Mạng lưới kết nối kỹ thuật (Tech Network / Blueprint Grid) -->
+  <g stroke="#1c1b18" stroke-width="4" stroke-dasharray="4, 4" stroke-linecap="round">
+    <line x1="50" y1="20" x2="20" y2="50" />
+    <line x1="50" y1="20" x2="80" y2="50" />
+    <line x1="20" y1="50" x2="50" y2="80" />
+    <line x1="80" y1="50" x2="50" y2="80" />
+    <!-- Trục chéo trung tâm -->
+    <line x1="20" y1="50" x2="80" y2="50" />
+    <line x1="50" y1="20" x2="50" y2="80" />
+  </g>
+
+  <!-- Bóng đổ 3D nổi cho từng khối (Floating UI Tech Aesthetic) -->
+  <g transform="translate(4, 4)" fill="#1c1b18">
+    <circle cx="50" cy="20" r="14" />
+    <rect x="6" y="36" width="28" height="28" rx="4" />
+    <path d="M 75,36 H 85 V 45 H 94 V 55 H 85 V 64 H 75 V 55 H 66 V 45 H 75 V 36 Z" />
+    <polygon points="50,94 34,70 66,70" />
+  </g>
+
+  <!-- Lớp hiển thị chính của các Bauhaus Nodes -->
+  <g stroke="#1c1b18" stroke-width="6" stroke-linejoin="round">
+    <!-- Đỉnh Top: Hình Tròn (Quality) -->
+    <circle cx="50" cy="20" r="14" fill="#cdb4db" />
+    
+    <!-- Đỉnh Trái: Hình Vuông (Product Engineering) -->
+    <rect x="6" y="36" width="28" height="28" rx="4" fill="#2d9f75" />
+    
+    <!-- Đỉnh Phải: Dấu Cộng (Infrastructure) -->
+    <path d="M 75,36 H 85 V 45 H 94 V 55 H 85 V 64 H 75 V 55 H 66 V 45 H 75 V 36 Z" fill="#f4a261" />
+    
+    <!-- Đỉnh Dưới: Tam Giác (Growth / The Vertex) -->
+    <polygon points="50,94 34,70 66,70" fill="#e76f51" />
+  </g>
+
+  <!-- Chi tiết lõi vi mạch (Core / Tech pins) bên trong mỗi Node -->
+  <g fill="#1c1b18">
+    <circle cx="50" cy="20" r="3" />
+    <circle cx="20" cy="50" r="3" />
+    <circle cx="80" cy="50" r="3" />
+    <!-- Điểm tâm của tam giác được tính toán lệch lên một chút -->
+    <circle cx="50" cy="78" r="3" />
+  </g>
+</svg>
