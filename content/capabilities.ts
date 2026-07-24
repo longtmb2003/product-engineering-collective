@@ -100,12 +100,11 @@ export const whatWeDo: WhatWeDoContent = {
         "Positioning and messaging",
         "Landing pages and campaign sites",
         "Product launch campaigns",
-        "Facebook and Google Ads",
+        "Paid social advertising",
         "SEO and content production",
         "Customer and CRM operations",
       ],
       stack: [
-        { name: "Google Ads", logo: "googleads" },
         { name: "Meta Ads", logo: "meta" },
         { name: "Analytics", logo: "googleanalytics" },
       ],

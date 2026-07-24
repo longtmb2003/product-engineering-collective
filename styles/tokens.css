@@ -26,32 +26,35 @@
    */
 
   /*
-   * Stock. Warmer cream to match the Retro Pop / Neobrutalism aesthetic.
+   * Stock. A soft warm white — bright enough to read as paper, not so bright
+   * that it glares.
    */
-  --paper-968: oklch(0.978 0.003 75);
-  --paper-918: oklch(0.935 0.004 75);
-  --paper-880: oklch(0.9 0.004 75);
-  --paper-770: oklch(0.79 0.005 75);
-  --paper-615: oklch(0.64 0.005 75);
+  --paper-968: oklch(0.96 0.005 75);
+  --paper-918: oklch(0.922 0.006 75);
+  --paper-880: oklch(0.888 0.007 75);
+  --paper-770: oklch(0.78 0.008 75);
+  --paper-615: oklch(0.628 0.008 75);
 
   /*
-   * Ink. High contrast dark charcoal for strong retro typography.
+   * Ink. Warm charcoal, set slightly lighter than full strength so long
+   * reading is comfortable rather than sharp.
    */
-  --ink-265: oklch(0.255 0.004 70);
-  --ink-395: oklch(0.39 0.004 70);
-  --ink-520: oklch(0.515 0.004 70);
-  --ink-660: oklch(0.665 0.004 72);
-  --ink-975: oklch(0.98 0.002 75);
+  --ink-265: oklch(0.3 0.006 68);
+  --ink-395: oklch(0.425 0.006 68);
+  --ink-520: oklch(0.505 0.006 68);
+  --ink-660: oklch(0.67 0.005 72);
+  --ink-975: oklch(0.975 0.004 75);
 
   /*
-   * Accent: Vintage Green for the Retro Pop feel.
+   * Accent: a muted terracotta. Chroma kept low so it reads as a pigment in
+   * the same family as the ink, not as a highlight sitting on top.
    */
-  --accent-480: oklch(0.475 0.085 47);
-  --accent-415: oklch(0.405 0.08 45);
+  --accent-480: oklch(0.5 0.072 52);
+  --accent-415: oklch(0.435 0.068 50);
 
   /* Status. Hue rotation at the accent's lightness and restraint. */
-  --signal-success: oklch(0.47 0.09 148);
-  --signal-destructive: oklch(0.465 0.145 28);
+  --signal-success: oklch(0.47 0.08 148);
+  --signal-destructive: oklch(0.47 0.125 28);
 
   /* ---- Layer 2: semantic roles --------------------------------------- */
   --surface-base: var(--paper-968);
@@ -67,13 +70,12 @@
   --text-primary: var(--ink-265);
   --text-secondary: var(--ink-395);
   /* Subordinate information only: metadata, labels, supporting lines.
-     5.02:1 on the page.
+     5.23:1 on the page.
 
-     USAGE RULE: not permitted on --surface-1, where it computes to 4.32:1.
-     Text on surface-1 must use secondary or primary. The ramp is not
-     compressed to accommodate a pairing the page does not contain. */
+     On --surface-1 it computes to 4.67:1, so it stays legible on the
+     Contact band as well as on the page. */
   --text-muted: var(--ink-520);
-  /* Restricted: 2.84:1 fails AA for normal text. Permitted only at >=24px or
+  /* Restricted: 2.67:1 fails AA for normal text. Permitted only at >=24px or
      for genuinely non-essential decoration. Never for marginalia, captions
      or metadata. Currently: two middot separators. */
   --text-faint: var(--ink-660);
@@ -82,9 +84,10 @@
   --accent: var(--accent-480);
   --accent-hover: var(--accent-415);
 
-  /* Neobrutalism / Retro Pop: Borders are dark ink lines. */
-  --border-subtle: var(--ink-265);
-  --border-strong: var(--ink-265);
+  /* Hairlines, not ink lines. Dark borders on every edge — and on the datum,
+     which runs the whole page — were the main source of visual harshness. */
+  --border-subtle: var(--paper-770);
+  --border-strong: var(--paper-615);
 
   --success: var(--signal-success);
   /* The system does not invent a second warm hue for warning. */

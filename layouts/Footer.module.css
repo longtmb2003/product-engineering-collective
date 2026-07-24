@@ -2,8 +2,9 @@
  * Outside .page, so the datum does not extend into it. The line's terminal
  * tick sits at this element's top edge.
  *
- * Lowest density on the page. No back-to-top control, no newsletter capture,
- * no social row — each would reopen a page that has just closed itself.
+ * The last chance to convert: a prompt and a direct action first, then clean
+ * navigation, then a baseline that restates what the team does. No newsletter
+ * capture, no social row, no filler.
  */
 
 .footer {
@@ -12,60 +13,116 @@
   inline-size: 100%;
   max-inline-size: var(--width-content);
   margin-inline: auto;
-  padding-block: var(--gap-header);
+  padding-block: var(--gap-section) var(--gap-header);
 }
 
 .inner {
   grid-column: content-start / content-end;
   display: flex;
   flex-direction: column;
-  gap: var(--gap-header);
+  gap: var(--gap-section);
 }
 
-.identity {
-  max-inline-size: var(--width-prose);
+/* The conversion block. */
+.prompt {
+  font-size: var(--text-title);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  text-wrap: balance;
+  max-inline-size: var(--width-title);
 }
 
-.mark {
-  display: inline-block;
-  transition: opacity var(--duration-state) var(--ease-state);
+.actions {
+  margin-block-start: var(--gap-header);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16) var(--space-32);
 }
 
-.mark:hover {
-  opacity: 0.8;
-}
-
-.logo {
-  width: 48px;
-  height: 48px;
-}
-
-.tagline {
-  margin-block-start: var(--gap-element);
+/* Filled action — the one place the footer earns a strong CTA. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--space-48);
+  padding-inline: var(--space-24);
   font-size: var(--text-metadata);
-  line-height: var(--lh-metadata);
-  color: var(--text-muted);
+  font-weight: var(--weight-medium);
+  color: var(--text-on-accent);
+  background-color: var(--accent);
+  border-radius: var(--radius-base);
+  transition: background-color var(--duration-state) var(--ease-state);
 }
 
+.cta:hover {
+  background-color: var(--accent-hover);
+}
+
+.cta:active {
+  transition-duration: var(--duration-instant);
+}
+
+.email {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--space-48);
+  font-size: var(--text-metadata);
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--duration-state) var(--ease-state);
+}
+
+.email:hover {
+  color: var(--text-primary);
+}
+
+/*
+ * The two nav columns are visually identical in styling, so side by side they
+ * blur together. A hairline divider and generous spacing before each column
+ * after the first separates them cleanly.
+ */
 .columns {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gap-header) var(--space-64);
+  gap: var(--gap-header) 0;
 }
 
+.columns > * + * {
+  padding-inline-start: var(--space-48);
+  border-inline-start: 1px solid var(--border-subtle);
+}
+
+.columns > * {
+  padding-inline-end: var(--space-48);
+}
+
+/*
+ * Column titles read as a different register from the links beneath them:
+ * monospace, uppercase and accent-coloured, versus sans body links.
+ */
+/*
+ * The title was SMALLER than the links beneath it (15px against 17px), which
+ * is why it never read as a heading no matter what colour it was given. It is
+ * now clearly larger than its content, in the accent, with a rule under it.
+ */
 .columnTitle {
-  font-size: var(--text-marginalia);
-  line-height: var(--lh-marginalia);
-  letter-spacing: var(--ls-marginalia);
-  font-weight: var(--weight-regular);
-  color: var(--text-muted);
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+  font-weight: var(--weight-medium);
+  color: var(--accent);
+  padding-block-end: var(--space-12);
+  border-block-end: 1px solid var(--accent);
 }
 
 .columnList {
-  margin-block-start: var(--gap-element);
+  margin-block-start: var(--gap-group);
   display: flex;
   flex-direction: column;
-  gap: var(--gap-tight);
+  gap: var(--space-4);
 }
 
 .link {
@@ -85,11 +142,40 @@
   transition-duration: var(--duration-instant);
 }
 
-.legal {
+/* Baseline: brand mark, what the team does, and the copyright. */
+.baseline {
+  grid-column: content-start / content-end;
+  margin-block-start: var(--gap-section);
+  padding-block-start: var(--gap-header);
+  border-block-start: 1px solid var(--border-subtle);
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--gap-tight) var(--gap-group);
+  flex-direction: column;
+  gap: var(--gap-element);
+}
+
+.mark {
+  display: inline-block;
+  inline-size: fit-content;
+  transition: opacity var(--duration-state) var(--ease-state);
+}
+
+.mark:hover {
+  opacity: 0.8;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.tagline {
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-secondary);
+}
+
+.copyright {
   font-size: var(--text-caption);
   line-height: var(--lh-caption);
   color: var(--text-muted);
@@ -99,10 +185,16 @@
   .inner {
     flex-direction: row;
     justify-content: space-between;
-    flex-wrap: wrap;
+    gap: var(--space-96);
   }
 
-  .legal {
-    flex-basis: 100%;
+  .baseline {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-24);
+  }
+
+  .tagline {
+    flex: 1 1 auto;
   }
 }

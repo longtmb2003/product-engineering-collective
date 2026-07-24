@@ -1,4 +1,16 @@
 /*
+ * The closing section stands out by SURFACE, not by colour.
+ *
+ * A saturated block here would fight the page; a slightly deeper sheet with
+ * a hairline above and below reads as a separate panel — the visitor knows
+ * they have arrived somewhere without being shouted at.
+ */
+.section {
+  background-color: var(--surface-1);
+  border-block: 1px solid var(--border-subtle);
+}
+
+/*
  * No cards, no icons, no buttons. The contact details are a short block of
  * text in the content column, set with the same tokens every other section
  * uses. The only treatment is the link underline already established in

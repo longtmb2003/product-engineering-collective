@@ -1,16 +1,21 @@
 import type { FooterContent } from "@/content/types";
 
 export const footer: FooterContent = {
+  prompt: "Have something to build?",
+  cta: { label: "Start a conversation", href: "#contact" },
+
   tagline:
-    "An independent collective building digital products end to end.",
+    "Vertex Lab — a software engineering team building custom web, mobile and backend software for startups and businesses.",
 
   columns: [
     {
       title: "Explore",
       links: [
         { label: "Services", href: "#what-we-do" },
+        { label: "Who we help", href: "#who-we-help" },
         { label: "Work", href: "#work" },
         { label: "Team", href: "#team" },
+        { label: "Process", href: "#process" },
         { label: "Contact", href: "#contact" },
       ],
     },
@@ -25,5 +30,6 @@ export const footer: FooterContent = {
       ],
     },
   ],
-  note: "",
+
+  note: "© 2026 Vertex Lab",
 };

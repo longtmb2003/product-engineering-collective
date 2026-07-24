@@ -13,13 +13,13 @@ import type { HeroContent } from "@/content/types";
 export const hero: HeroContent = {
   eyebrow: "Vertex Lab",
 
-  headline: "An independent collective that builds digital products end to end.",
+  headline: "We build custom software, end to end.",
 
   subhead:
-    "Four people covering product engineering, infrastructure, quality and growth. You work with all of them.",
+    "Vertex Lab is a software engineering team. We help startups and businesses design, build, deploy and maintain modern software — web, mobile, and the systems underneath.",
 
-  primaryCta: { label: "See our work", href: "#work" },
-  secondaryCta: { label: "Start a conversation", href: "#contact" },
+  primaryCta: { label: "Start your project", href: "#contact" },
+  secondaryCta: { label: "See our work", href: "#work" },
 
   evidence: [
     {

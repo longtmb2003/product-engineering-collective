@@ -26,6 +26,10 @@ export type NavItem = {
 export type ImageAsset = {
   src: string;
   alt: string;
+  /* Display ratio of the frame this image sits in. Lets a portrait composite
+     and a landscape screenshot each get a frame that fits, instead of one
+     shared ratio that letterboxes both. Defaults to 4:3. */
+  ratio?: string;
   /*
    * Optional CSS `object-position` value. Only meaningful where the source
    * ratio differs from the box and the image is therefore cropped.
@@ -114,15 +118,16 @@ export type Product = {
   /* The engineering choices, stated as facts. No sentence explaining why
      they matter — the gap between the scope and the rigour is the argument. */
   engineering: string;
-  stack: string[];
+  /* Technologies, with a brand mark where one exists. */
+  stack: { name: string; logo?: string }[];
   link: {
     label: string;
     href: string;
   };
   /* Points at the case study that will exist later. Teased, not shown. */
   depth: string;
-  /* Artifact D-01. Rendered at 4:3 regardless of the source's own ratio. */
-  plate: ImageAsset;
+  /* A draggable strip: the cover image first, then screenshots. */
+  gallery: ImageAsset[];
 };
 
 export type FeaturedWorkContent = {
@@ -169,7 +174,32 @@ export type StubContent = {
   placeholderLabel: string;
 };
 
-export type ProcessContent = StubContent;
+/* Who we help. A short label plus one line of who benefits. */
+export type Audience = {
+  name: string;
+  description: string;
+};
+
+export type AudienceContent = {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  audiences: Audience[];
+};
+
+/* How we work. One ordered step per stage of an engagement. */
+export type ProcessStep = {
+  index: string;
+  name: string;
+  description: string;
+};
+
+export type ProcessContent = {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  steps: ProcessStep[];
+};
 
 export type ContactContent = {
   eyebrow: string;
@@ -190,6 +220,10 @@ export type ContactContent = {
 };
 
 export type FooterContent = {
+  /* A short prompt + a direct action — the page's last chance to convert. */
+  prompt: string;
+  cta: NavItem;
+  /* One line on what the team does, so the final screen still answers it. */
   tagline: string;
   columns: {
     title: string;

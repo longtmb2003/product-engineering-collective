@@ -15,7 +15,11 @@ export function Contact({ content }: { content: ContactContent }) {
   const { person } = content;
 
   return (
-    <Section id="contact" labelledBy="contact-title">
+    <Section
+      id="contact"
+      labelledBy="contact-title"
+      className={styles.section}
+    >
       <SectionHeader
         id="contact-title"
         marginalia={content.eyebrow}

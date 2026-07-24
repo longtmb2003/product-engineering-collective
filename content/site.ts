@@ -6,7 +6,7 @@ export const site: SiteContent = {
   shortName: "Vertex Lab",
 
   description:
-    "An independent collective that builds digital products end to end. Four people covering product engineering, infrastructure, quality and growth.",
+    "Vertex Lab is a software engineering team building custom web, mobile and backend software for startups and businesses.",
 
   /* PLACEHOLDER — no address decided yet. */
   email: "tranhuynhathu@gmail.com",
@@ -15,8 +15,10 @@ export const site: SiteContent = {
 
   nav: [
     { label: "Services", href: "#what-we-do" },
+    { label: "Who we help", href: "#who-we-help" },
     { label: "Work", href: "#work" },
     { label: "Team", href: "#team" },
+    { label: "Process", href: "#process" },
     { label: "Contact", href: "#contact" },
   ],
 };

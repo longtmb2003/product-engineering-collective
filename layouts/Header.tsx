@@ -26,18 +26,24 @@ export function Header({
     <header className={className}>
       <div className={styles.inner}>
         <a href="#top" className={styles.mark}>
-          <img src="/logo.svg?v=9" alt={site.shortName} className={styles.logo} />
+          <img src="/logo.svg?v=10" alt={site.shortName} className={styles.logo} />
         </a>
 
         <nav aria-label="Primary" className={styles.desktopNav}>
           <ul className={styles.list}>
-            {site.nav.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} className={styles.link}>
-                  {item.label}
-                </a>
-              </li>
-            ))}
+            {site.nav.map((item) => {
+              const isContact = item.href === "#contact";
+              return (
+                <li key={item.href}>
+                  <a 
+                    href={item.href} 
+                    className={cn(styles.link, isContact && styles.ctaLink)}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -80,13 +86,20 @@ export function Header({
         className={cn(styles.panel, !open && styles.panelHidden)}
       >
         <ul className={styles.panelList}>
-          {site.nav.map((item) => (
-            <li key={item.href}>
-              <a href={item.href} onClick={close} className={styles.panelLink}>
-                {item.label}
-              </a>
-            </li>
-          ))}
+          {site.nav.map((item) => {
+            const isContact = item.href === "#contact";
+            return (
+              <li key={item.href}>
+                <a 
+                  href={item.href} 
+                  onClick={close} 
+                  className={cn(styles.panelLink, isContact && styles.ctaPanelLink)}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </header>

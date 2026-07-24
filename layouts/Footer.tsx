@@ -4,6 +4,10 @@ import styles from "./Footer.module.css";
 /*
  * Outside .page: the datum must not extend into the footer. Its terminal
  * tick sits at this element's top edge.
+ *
+ * The footer is the page's last chance to convert: it opens with a prompt
+ * and a direct action and a real email, states plainly what the team does,
+ * then gives clean navigation and proof links. Nothing here is filler.
  */
 export function Footer({
   site,
@@ -15,11 +19,16 @@ export function Footer({
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        <div className={styles.identity}>
-          <a href="#top" className={styles.mark}>
-            <img src="/logo.svg?v=9" alt={site.shortName} className={styles.logo} />
-          </a>
-          <p className={styles.tagline}>{content.tagline}</p>
+        <div className={styles.lead}>
+          <p className={styles.prompt}>{content.prompt}</p>
+          <div className={styles.actions}>
+            <a href={content.cta.href} className={styles.cta}>
+              {content.cta.label}
+            </a>
+            <a href={`mailto:${site.email}`} className={styles.email}>
+              {site.email}
+            </a>
+          </div>
         </div>
 
         <div className={styles.columns}>
@@ -50,11 +59,18 @@ export function Footer({
             </div>
           ))}
         </div>
+      </div>
 
-        <div className={styles.legal}>
-          <p>{site.name}</p>
-          <p>{content.note}</p>
-        </div>
+      <div className={styles.baseline}>
+        <a href="#top" className={styles.mark}>
+          <img
+            src="/logo.svg?v=10"
+            alt={site.shortName}
+            className={styles.logo}
+          />
+        </a>
+        <p className={styles.tagline}>{content.tagline}</p>
+        <p className={styles.copyright}>{content.note}</p>
       </div>
     </footer>
   );

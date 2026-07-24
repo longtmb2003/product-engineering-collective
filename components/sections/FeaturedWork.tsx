@@ -1,27 +1,17 @@
-import Image from "next/image";
 import type { FeaturedWorkContent, Product } from "@/content/types";
 import { Section, SectionHeader } from "@/components/layout/Section";
+import { Gallery } from "@/components/ui/Gallery";
 import { ExternalArrow } from "@/components/ui/ExternalArrow";
-import { cn } from "@/lib/utils";
 import styles from "./FeaturedWork.module.css";
-
-/* The crossing plate is wider than the standard plate at every breakpoint
-   above 768, so the two need different `sizes`. Both derive from the page
-   grid: crossing spans cross-start -> content-end, standard spans
-   content-start -> content-end. */
-const SIZES_CROSSING =
-  "(min-width: 1280px) 1152px, (min-width: 768px) calc(100vw - 128px), (min-width: 480px) calc(100vw - 72px), calc(100vw - 56px)";
-
-const SIZES_STANDARD =
-  "(min-width: 1280px) 992px, (min-width: 768px) calc(100vw - 224px), (min-width: 480px) calc(100vw - 72px), calc(100vw - 56px)";
 
 /*
  * Server component. This section carries the credibility for the whole page.
  *
- * The first product's plate crosses the datum; the second does not. With two
- * products, alternation reads as arbitrary — a single exception reads as
- * emphasis. Adding a third product is a change to content/work.ts and
- * nothing else.
+ * Each product opens with a cover image and continues into real screenshots,
+ * as a horizontal strip the visitor drags through. Native overflow scroll and
+ * scroll-snap only — no carousel library, no JavaScript.
+ *
+ * Adding a product, or a screenshot, is a change to content/work.ts alone.
  */
 export function FeaturedWork({ content }: { content: FeaturedWorkContent }) {
   return (
@@ -37,12 +27,7 @@ export function FeaturedWork({ content }: { content: FeaturedWorkContent }) {
 
       <ul className={styles.list}>
         {content.products.map((product, index) => (
-          <ProductEntry
-            key={product.slug}
-            product={product}
-            index={index}
-            crossing={index === 0}
-          />
+          <ProductEntry key={product.slug} product={product} index={index} />
         ))}
       </ul>
     </Section>
@@ -52,26 +37,19 @@ export function FeaturedWork({ content }: { content: FeaturedWorkContent }) {
 function ProductEntry({
   product,
   index,
-  crossing,
 }: {
   product: Product;
   index: number;
-  crossing: boolean;
 }) {
   const plate = String(index + 1).padStart(2, "0");
 
   return (
     <li className={styles.entry}>
-      <div className={cn(crossing ? styles.plateCrossing : styles.plate)}>
-        <Image
-          src={product.plate.src}
-          alt={product.plate.alt}
-          fill
-          sizes={crossing ? SIZES_CROSSING : SIZES_STANDARD}
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
+      <Gallery
+        images={product.gallery}
+        label={product.name}
+        eager={index === 0}
+      />
 
       <p className={styles.plateNumber} aria-hidden="true">
         Plate {plate}
@@ -91,9 +69,19 @@ function ProductEntry({
         <p className={styles.engineering}>{product.engineering}</p>
 
         <ul className={styles.stack}>
-          {product.stack.map((item) => (
-            <li key={item} className={styles.stackItem}>
-              {item}
+          {product.stack.map((tool) => (
+            <li key={tool.name} className={styles.stackItem}>
+              {tool.logo ? (
+                <img
+                  src={`/logos/${tool.logo}.svg`}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                  className={styles.stackLogo}
+                />
+              ) : null}
+              {tool.name}
             </li>
           ))}
         </ul>

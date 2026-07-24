@@ -1,15 +1,19 @@
 import { site } from "@/content/site";
 import { hero } from "@/content/hero";
 import { whatWeDo } from "@/content/capabilities";
+import { audience } from "@/content/audience";
 import { featuredWork } from "@/content/work";
 import { team } from "@/content/team";
+import { process } from "@/content/process";
 import { contact } from "@/content/contact";
 
 import { Hero } from "@/components/sections/Hero";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { WhatWeDo } from "@/components/sections/WhatWeDo";
+import { Audience } from "@/components/sections/Audience";
 import { FeaturedWork } from "@/components/sections/FeaturedWork";
 import { MeetTheTeam } from "@/components/sections/MeetTheTeam";
+import { Process } from "@/components/sections/Process";
 import { Contact } from "@/components/sections/Contact";
 
 /*
@@ -30,9 +34,13 @@ export default function HomePage() {
 
       <WhatWeDo content={whatWeDo} />
 
+      <Audience content={audience} />
+
       <FeaturedWork content={featuredWork} />
 
       <MeetTheTeam content={team} />
+
+      <Process content={process} />
 
       <Contact content={contact} />
     </>

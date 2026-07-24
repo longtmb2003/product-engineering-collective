@@ -1,0 +1,81 @@
+/*
+ * How we work. A vertical sequence — the same directed-path language as the
+ * services list, with the numbers carrying the order.
+ */
+
+.list {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-auto-rows: max-content;
+  row-gap: var(--gap-header);
+  margin-block-start: var(--gap-header);
+}
+
+.entry {
+  grid-column: full-start / full-end;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+/* The step number, in the measurement gutter, like the services index. */
+.index {
+  grid-column: cross-start / datum;
+  justify-self: end;
+  padding-inline-end: var(--space-16);
+  font-size: var(--text-marginalia);
+  line-height: var(--lh-marginalia);
+  letter-spacing: var(--ls-marginalia);
+  color: var(--text-muted);
+  display: none;
+}
+
+.content {
+  grid-column: content-start / content-end;
+  position: relative;
+}
+
+.name {
+  font-size: var(--text-heading);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.name::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1 * var(--tick-reach));
+  inset-block-start: calc(var(--text-heading) * var(--lh-heading) / 2);
+  inline-size: var(--tick-length);
+  block-size: 1px;
+  background-color: var(--border-subtle);
+  transform: translateY(-0.5px);
+}
+
+.description {
+  margin-block-start: var(--gap-tight);
+  max-inline-size: var(--width-prose);
+  font-size: var(--text-metadata);
+  line-height: var(--lh-metadata);
+  color: var(--text-secondary);
+}
+
+@media (min-width: 768px) {
+  .index {
+    display: block;
+    grid-row: 1;
+  }
+
+  .content {
+    grid-row: 1;
+  }
+}
+
+@media (forced-colors: active) {
+  .name::before {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}
